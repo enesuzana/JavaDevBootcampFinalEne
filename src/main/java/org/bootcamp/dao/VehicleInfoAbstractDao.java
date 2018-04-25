@@ -1,6 +1,7 @@
 package org.bootcamp.dao;
 
 import org.bootcamp.model.VehicleInfo;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -8,6 +9,8 @@ import java.util.Map;
 import java.util.HashMap;
 
 abstract class VehicleInfoAbstractDao implements VehicleInfoDao {
+
+
 
     protected final Map<String, VehicleInfo> vehicleInfoMap = new HashMap<>();
 

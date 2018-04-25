@@ -6,20 +6,24 @@ import org.bootcamp.dao.VehicleInfoJsonFileDao;
 import org.bootcamp.formula.Formula;
 import org.bootcamp.model.VehicleInfo;
 import org.bootcamp.vehicle.Vehicle;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 import static org.bootcamp.service.ConversionUtils.getVehicle;
-
+@Component
 public final class InsuranceCalculatorService {
 
-    private final VehicleInfoDao dao;
+    private VehicleInfoDao dao;
 
-    public InsuranceCalculatorService(String filePath) {
-
-        this.dao = new VehicleInfoJsonFileDao(filePath);
+    public InsuranceCalculatorService( VehicleInfoDao dao){
+        this.dao = dao;
     }
 
     public List<InsuranceCalculationResult> calculateAll() {
@@ -40,7 +44,7 @@ public final class InsuranceCalculatorService {
             final Formula formula = Formula.valueOf(vehicleInfo.getFormulaTypeName());
             final float totalCost = calculator.calculate(vehicle, formula);
 
-            final InsuranceCalculationResult result = new InsuranceCalculationResult(vehicleInfo.getId(),
+            final org.bootcamp.service.InsuranceCalculationResult result = new org.bootcamp.service.InsuranceCalculationResult(vehicleInfo.getId(),
                                                         vehicleInfo.getVehicleTypeName(), totalCost);
 
             calculationResults.add(result);
